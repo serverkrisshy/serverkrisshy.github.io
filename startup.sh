@@ -212,7 +212,9 @@ esac
 
 # Starting functions
 background_checks
+clear
 logo
+echo
 timezone
 timedatectl set-ntp true
 echo "Here we Go...."
