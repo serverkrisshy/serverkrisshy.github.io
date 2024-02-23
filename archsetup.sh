@@ -1,12 +1,5 @@
 #!/bin/sh
 
-# Checking if running in Repo Folder
-if [[ "$(basename "$(pwd)" | tr '[:upper:]' '[:lower:]')" =~ ^scripts$ ]]; then
-    echo "You are running this in ArchKrisshy Folder."
-    echo "Please use ./archkrisshy.sh instead"
-    exit
-fi
-
 timedatectl set-ntp true
 cd $HOME
 clear
