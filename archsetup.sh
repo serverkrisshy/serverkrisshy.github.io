@@ -25,6 +25,7 @@ pacman -Sy archlinux-keyring pacman-mirrorlist git --needed --noconfirm
 clear
 echo "Please setting your Partitions first!!!"
 echo "Use fdisk /dev/your_disk_partitions or cfdisk /dev/your_disk_partition "
+echo 
 fdisk -l
 #cd $HOME/ArchKrisshy
 #exec ./archkrisshy.sh
