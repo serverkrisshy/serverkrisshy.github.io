@@ -1,66 +1,6 @@
 #!/bin/sh
 #github-action genshdoc
 #
-# Starting functions
-clear
-background_checks
-clear
-echo -ne "
-------------------------------------------------------------------------------------
- █████╗ ██████╗  ██████╗██╗  ██╗██╗  ██╗██████╗ ██╗███████╗███████╗██╗  ██╗██╗   ██╗
-██╔══██╗██╔══██╗██╔════╝██║  ██║██║ ██╔╝██╔══██╗██║██╔════╝██╔════╝██║  ██║╚██╗ ██╔╝
-███████║██████╔╝██║     ███████║█████╔╝ ██████╔╝██║███████╗███████╗███████║ ╚████╔╝ 
-██╔══██║██╔══██╗██║     ██╔══██║██╔═██╗ ██╔══██╗██║╚════██║╚════██║██╔══██║  ╚██╔╝  
-██║  ██║██║  ██║╚██████╗██║  ██║██║  ██╗██║  ██║██║███████║███████║██║  ██║   ██║   
-╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝  ╚═╝   ╚═╝   
-------------------------------------------------------------------------------------
-                        Automated Arch Linux Installer
-------------------------------------------------------------------------------------
-                       Code by KrisshyDesign @Indonesia
-------------------------------------------------------------------------------------
-"
-echo
-timezone
-clear
-logo
-echo
-echo "Here we Go...."
-echo
-echo -ne "
--------------------------------------------------------------------------
-   Getting the mirrorlist (Indonesian Users only) from Server Krisshy 
--------------------------------------------------------------------------
-"
-cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-curl -o /etc/pacman.d/mirrorlist https://serverkrisshy.github.io/mirrorlist
-sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
-echo
-echo -ne "
--------------------------------------------------------------------------
-                Updating keyring for optimize installation 
--------------------------------------------------------------------------
-"
-timedatectl set-ntp true
-pacman-key --init
-pacman-key --populate archlinux
-pacman -Sy archlinux-keyring pacman-mirrorlist --needed --noconfirm
-clear
-logo
-echo
-echo -ne "
--------------------------------------------------------------------------
-                Format & Mounting selected partition 
--------------------------------------------------------------------------
-"
-umount -A --recursive /mnt
-mkfs.vfat -F32 /dev/sda1
-mkfs.ext4 /dev/sda2
-mount /dev/sda2 /mnt
-mkdir -p /mnt/boot
-mount /dev/sda1 /mnt/boot
-
-
-
 # @setting-header General Settings
 CONFIG_FILE=$HOME/setup.conf
 if [ ! -f $CONFIG_FILE ]; then # check if file exists
@@ -268,3 +208,80 @@ case ${options[$?]} in
     *) echo "Wrong option. Try again";timezone;;
 esac
 }
+
+# Starting functions
+
+clear
+background_checks
+clear
+echo -ne "
+------------------------------------------------------------------------------------
+ █████╗ ██████╗  ██████╗██╗  ██╗██╗  ██╗██████╗ ██╗███████╗███████╗██╗  ██╗██╗   ██╗
+██╔══██╗██╔══██╗██╔════╝██║  ██║██║ ██╔╝██╔══██╗██║██╔════╝██╔════╝██║  ██║╚██╗ ██╔╝
+███████║██████╔╝██║     ███████║█████╔╝ ██████╔╝██║███████╗███████╗███████║ ╚████╔╝ 
+██╔══██║██╔══██╗██║     ██╔══██║██╔═██╗ ██╔══██╗██║╚════██║╚════██║██╔══██║  ╚██╔╝  
+██║  ██║██║  ██║╚██████╗██║  ██║██║  ██╗██║  ██║██║███████║███████║██║  ██║   ██║   
+╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝  ╚═╝   ╚═╝   
+------------------------------------------------------------------------------------
+                        Automated Arch Linux Installer
+------------------------------------------------------------------------------------
+                       Code by KrisshyDesign @Indonesia
+------------------------------------------------------------------------------------
+"
+echo
+timezone
+clear
+logo
+echo
+echo "Here we Go...."
+echo
+echo -ne "
+-------------------------------------------------------------------------
+   Getting the mirrorlist (Indonesian Users only) from Server Krisshy 
+-------------------------------------------------------------------------
+"
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+curl -o /etc/pacman.d/mirrorlist https://serverkrisshy.github.io/mirrorlist
+sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
+echo
+echo -ne "
+-------------------------------------------------------------------------
+                Updating keyring for optimize installation 
+-------------------------------------------------------------------------
+"
+timedatectl set-ntp true
+pacman-key --init
+pacman-key --populate archlinux
+pacman -Sy archlinux-keyring pacman-mirrorlist --needed --noconfirm
+clear
+logo
+echo
+echo -ne "
+-------------------------------------------------------------------------
+                Format & Mounting selected partition 
+-------------------------------------------------------------------------
+"
+umount -A --recursive /mnt
+mkfs.fat -F32 /dev/sda1
+mkfs.ext4 /dev/sda2
+mount /dev/sda2 /mnt
+mkdir -p /mnt/boot
+mount /dev/sda1 /mnt/boot
+echo
+echo -ne "
+-------------------------------------------------------------------------
+                Installing base system to this Machine 
+-------------------------------------------------------------------------
+          This may take a several minutes, Enjoy your coffee
+"
+echo
+pacstrap -i /mnt base base-devel linux-firmware linux linux-headers linux-lts linux-lts-headers --needed --noconfirm
+curl -o /mnt/etc/pacman.d/mirrorlist  https://serverkrisshy.github.io/mirrorlist
+curl -o /mnt/root/chroot.sh https://serverkrisshy.github.io/chroot.sh
+chmod +x /mnt/root/chroot.sh
+genfstab -U /mnt >> /mnt/etc/fstab
+echo " 
+  Generated fstab file:
+"
+cat /mnt/etc/fstab
+arch-chroot /mnt && sh /root/chroot.sh
