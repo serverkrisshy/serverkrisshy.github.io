@@ -1,14 +1,16 @@
 #!/bin/sh
 #github-action genshdoc
 #
-# @file Startup
-# @brief This script will ask users about their prefrences like disk, file system, timezone, keyboard layout, user name, password, etc.
-# @stdout Output routed to startup.log
-# @stderror Output routed to startup.log
+# step1
+#ArchKrisshy
+#Arch Linux Automated Installer
+#Code by KrisshyDesign @Indonesia
+#
+######################################################################################
 setfont ter-v22n
 time_zone="$(curl -f -s https://ipapi.co/timezone)"
 ip_address=$(curl -f -s ifconfig.io)
-# @setting-header General Settings
+######################################################################################
 root_check() {
     if [[ "$(id -u)" != "0" ]]; then
         echo -ne "ERROR! This script must be run under the 'root' user!\n"
@@ -71,9 +73,8 @@ echo
 #
 }
 
-# @description Detects and sets timezone.
+# Added this from Archwiki https://wiki.archlinux.org/title/System_time
 timezone () {
-# Added this from arch wiki https://wiki.archlinux.org/title/System_time
 echo -ne "
 System detected your Timezone & IP Adrress to be : \n \n '$time_zone' \n '$ip_address' \n \n"
 echo "Prepared the Installation ..." && sleep 5
@@ -91,7 +92,7 @@ echo "Continue in 1 Second ..." && sleep 1
 
 
 
-# Starting functions
+# Start from here
 clear
 clear
 echo -ne "Are you has setting up the partition? \n
@@ -183,7 +184,7 @@ echo -ne "
 echo
 pacstrap /mnt base base-devel linux-firmware linux linux-headers --noconfirm --needed
 curl -o /mnt/root/ArchKrisshy-setup2.sh https://serverkrisshy.github.io/ArchKrisshy-setup2.sh
-chmod +x /mnt/root/ArchKrisshy-setup2.sh
+chmod 777 /mnt/root/ArchKrisshy-setup2.sh
 echo
 genfstab -U /mnt >> /mnt/etc/fstab
 echo "
@@ -197,4 +198,4 @@ if correct press enter and then exec the ArchKrisshy-setup.sh like this : \n
 \n sh /root/ArchKrisshy-setup2.sh"
 echo
 read
-arch-chroot /mnt
+arch-chroot /mnt/root ./ArchKrisshy-setup2.sh
