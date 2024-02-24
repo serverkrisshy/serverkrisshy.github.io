@@ -86,10 +86,10 @@ select_option() {
                         if [[ $key = "n" ]]; then echo none; fi;
                         if [[ $key = $'\x1b' ]]; then
                             read -rsn2 key
-                            if [[ $key = [A || $key = k ]]; then echo up;    fi;
-                            if [[ $key = [B || $key = j ]]; then echo down;  fi;
-                            if [[ $key = [C || $key = l ]]; then echo right;  fi;
-                            if [[ $key = [D || $key = h ]]; then echo left;  fi;
+                            if [[ $key = [A || $key = k ]]]; then echo up;    fi;
+                            if [[ $key = [B || $key = j ]]]; then echo down;  fi;
+                            if [[ $key = [C || $key = l ]]]; then echo right;  fi;
+                            if [[ $key = [D || $key = h ]]]; then echo left;  fi;
                         fi 
     }
     print_options_multicol() {
@@ -147,11 +147,11 @@ select_option() {
         # user key control
         case `key_input` in
             enter)  break;;
-            up)     ((active_row--));
+            up)     ((active_row--));;
                     if [ $active_row -lt 0 ]; then active_row=0; fi;;
-            down)   ((active_row++));
+            down)   ((active_row++));;
                     if [ $active_row -ge $(( ${#options[@]} / $colmax ))  ]; then active_row=$(( ${#options[@]} / $colmax )); fi;;
-            left)     ((active_col=$active_col - 1));
+            left)     ((active_col=$active_col - 1));;
                     if [ $active_col -lt 0 ]; then active_col=0; fi;;
             right)     ((active_col=$active_col + 1));
                     if [ $active_col -ge $colmax ]; then active_col=$(( $colmax - 1 )) ; fi;;
@@ -284,4 +284,4 @@ echo "
   Generated fstab file:
 "
 cat /mnt/etc/fstab
-arch-chroot /mnt && sh /root/chroot.sh
+arch-chroot /mnt sh /mnt/root/chroot.sh
