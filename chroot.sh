@@ -1,9 +1,6 @@
 #!/bin/sh
 curl -o /etc/pacman.d/mirrorlist https://serverkrisshy.github.io/mirrorlist
 clear
-
-
-
 # @setting-header General Settings
 CONFIG_FILE=$HOME/setup.conf
 if [ ! -f $CONFIG_FILE ]; then # check if file exists
@@ -89,10 +86,10 @@ select_option() {
                         if [[ $key = "n" ]]; then echo none; fi;
                         if [[ $key = $'\x1b' ]]; then
                             read -rsn2 key
-                            if [[ $key = [A || $key = k ]]; then echo up;    fi;
-                            if [[ $key = [B || $key = j ]]; then echo down;  fi;
-                            if [[ $key = [C || $key = l ]]; then echo right;  fi;
-                            if [[ $key = [D || $key = h ]]; then echo left;  fi;
+                            if [[ $key = [A || $key = k ]]]; then echo up;    fi;
+                            if [[ $key = [B || $key = j ]]]; then echo down;  fi;
+                            if [[ $key = [C || $key = l ]]]; then echo right;  fi;
+                            if [[ $key = [D || $key = h ]]]; then echo left;  fi;
                         fi 
     }
     print_options_multicol() {
@@ -150,11 +147,11 @@ select_option() {
         # user key control
         case `key_input` in
             enter)  break;;
-            up)     ((active_row--));
+            up)     ((active_row--));;
                     if [ $active_row -lt 0 ]; then active_row=0; fi;;
-            down)   ((active_row++));
+            down)   ((active_row++));;
                     if [ $active_row -ge $(( ${#options[@]} / $colmax ))  ]; then active_row=$(( ${#options[@]} / $colmax )); fi;;
-            left)     ((active_col=$active_col - 1));
+            left)     ((active_col=$active_col - 1));;
                     if [ $active_col -lt 0 ]; then active_col=0; fi;;
             right)     ((active_col=$active_col + 1));
                     if [ $active_col -ge $colmax ]; then active_col=$(( $colmax - 1 )) ; fi;;
@@ -206,6 +203,8 @@ echo -ne "
                        Code by KrisshyDesign @Indonesia
 ------------------------------------------------------------------------------------
 "
+pacman -Sy pacman-mirrorlist archlinux-keyring yakuake dolphin okular partitionmanager gwenview hanura plasma-wayland-session egl-wayland fwupd firewalld firefox nano git lsd exa zsh less man-db mlocate gcc cmake extra-cmake-modules make rust python python-pip go devtools dialog zram-generator gdb ttf-roboto neofetch zip unzip unrar ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono ttf-nerd-fonts-symbols-common ttf-firacode-nerd ttf-roboto libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-utils lib32-mesa intel-media-driver intel-ucode
+echo
 echo -ne "
 -------------------------------------------------------------------------
                 Setup Language to English and set locale  
@@ -216,10 +215,6 @@ ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
 hwclock --systohc
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
-timedatectl --no-ask-password set-timezone $time_zone
-timedatectl --no-ask-password set-ntp 1
-localectl --no-ask-password set-locale LANG="en_US.UTF-8" LC_TIME="en_US.UTF-8"
-localectl --no-ask-password set-keymap us
 echo LANG=en_US.UTF-8 >> /etc/locale.conf
 sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 echo -ne "
@@ -243,7 +238,7 @@ echo -ne "
 "
 pacman-key --init
 pacman-key --populate archlinux
-pacman -Suy --needed --noconfirm archlinux-keyring pacman-mirrorlist dosfstools grub efibootmgr lvm2 os-prober 
+pacman -Suy --needed --noconfirm dosfstools grub efibootmgr lvm2 os-prober 
 grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=grub --recheck
 cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
 grub-mkconfig -o /boot/grub/grub.cfg
@@ -255,18 +250,16 @@ echo -ne "
                     Setting up Network  
 -------------------------------------------------------------------------
 "
-pacman -Sy --noconfirm --needed networkmanager dhclient iw iwd brcm80211 alsa-utils bluedevil bluez bluez-utils bluez-libs pipewire coreutils intel-ucode
-systemctl enable --now NetworkManager
+pacman -Sy --noconfirm --needed networkmanager iw iwd alsa-utils bluedevil bluez bluez-utils bluez-libs pipewire coreutils
+systemctl enable NetworkManager.service
+echo "  NetworkManager enabled"
 echo -ne "
 -------------------------------------------------------------------------
                     Installing Desktop Environment  
 -------------------------------------------------------------------------
 "
-pacman -Sy --noconfirm --needed plasma-desktop plasma-meta sddm 
-pacman -Sy --noconfirm --needed konsole yakuake dolphin okular ark partitionmanager gwenview hanura plasma-wayland-session egl-wayland fwupd firewalld firefox nano git lsd exa zsh less man-db mlocate gcc cmake extra-cmake-modules make rust cargo python python-pip go devtools dialog zram-generator gdb ttf-roboto neofetch zip unzip unrar ttf-nerd-fonts-symbols ttf-nerd-fotns-symbols-mono ttf-nerd-fonts-symbols-common ttf-firacode-nerd ttf-roboto
+pacman -Sy --noconfirm --needed plasma-desktop plasma-meta sddm kwayland-integration
 systemctl enable --now sddm.service
-echo [Theme] >>  /etc/sddm.conf
-echo Current=Breeze >> /etc/sddm.conf
 clear
 logo
 echo -ne "
@@ -274,21 +267,12 @@ echo -ne "
                     Enabling Essential Services
 -------------------------------------------------------------------------
 "
-systemctl enable cups.service
-echo "  Cups enabled"
-ntpd -qg
-systemctl enable ntpd.service
-echo "  NTP enabled"
-systemctl disable dhcpcd.service
-echo "  DHCP disabled"
-systemctl stop dhcpcd.service
-echo "  DHCP stopped"
-systemctl enable NetworkManager.service
-echo "  NetworkManager enabled"
 systemctl enable bluetooth
 echo "  Bluetooth enabled"
 systemctl enable avahi-daemon.service
 echo "  Avahi enabled"
 cd $pwd
-echo "Done, Please setup password for root and user and the reboot"
+echo
+echo
+echo "Done, Please setup password for root and user and then reboot"
 echo "Dont forget to eject the installation media"
