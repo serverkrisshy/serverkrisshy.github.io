@@ -184,9 +184,9 @@ echo -ne "
 ------------------------------------------------------------------------------------
 "
 echo
-pacstrap /mnt base base-devel linux-firmware linux linux-headers --noconfirm --needed
-curl -o /mnt/root/ArchKrisshy-setup2.sh https://serverkrisshy.github.io/ArchKrisshy-setup2.sh
-chmod 777 /mnt/root/ArchKrisshy-setup2.sh
+pacstrap /mnt base base-devel linux-firmware linux linux-headers systemd  --noconfirm --needed
+curl -o /mnt/root/archkrisshysetup2.sh https://serverkrisshy.github.io/archkrisshysetup2.sh
+chmod 777 /mnt/root/archkrisshysetup2.sh
 echo
 genfstab -U /mnt >> /mnt/etc/fstab
 echo "
@@ -196,4 +196,4 @@ cat /mnt/etc/fstab
 echo
 echo "Enter = Yes , Ctrl+c = No \n"
 read -p "Is this correct ? "
-arch-chroot /mnt ./root/ArchKrisshy-setup2.sh
+arch-chroot /mnt ./root/archkrisshysetup2.sh
