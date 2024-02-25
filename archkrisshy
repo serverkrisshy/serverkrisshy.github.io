@@ -88,6 +88,9 @@ echo "Continue in 4 Seconds ..." && sleep 1
 echo "Continue in 3 Seconds ..." && sleep 1
 echo "Continue in 2 Seconds ..." && sleep 1
 echo "Continue in 1 Second ..." && sleep 1
+echo
+echo
+echo "Here we Go ...." && sleep 1
 }
 
 
@@ -95,10 +98,6 @@ echo "Continue in 1 Second ..." && sleep 1
 # Start from here
 clear
 clear
-echo -ne "Are you has setting up the partition? \n
-press Enter to continue \n
-press Ctrl + c to setting the partition"
-read
 clear
 echo -ne "
 ------------------------------------------------------------------------------------
@@ -114,7 +113,15 @@ echo -ne "
                            Code by KrisshyDesign @Indonesia
 ------------------------------------------------------------------------------------
 "
-echo
+echo -ne "
+------------------------------------------------------------------------------------
+     Warning!!! Make sure you has setting the partition before run this script
+------------------------------------------------------------------------------------
+"
+echo -ne "Are you has setting up the partition? \n
+press Enter to continue \n
+press Ctrl + c to setting the partition"
+read
 background_checks
 clear
 logo
@@ -124,7 +131,6 @@ timedatectl set-ntp true
 clear
 logo
 echo
-echo "Here we Go ...."
 echo
 echo -ne "
 ------------------------------------------------------------------------------------
@@ -155,10 +161,6 @@ echo -ne "
 echo
 umount -R /mnt
 echo
-echo -ne "This prgoress will destroy all data on this Machine, make sure you has setting up the partition for this installation. \n
-for continue installation press Enter \n
-for exit installation press Ctrl + c"
-read
 mkfs.fat -F32 /dev/nvme0n1p1
 mkfs.ext4 /dev/nvme0n1p2
 mkfs.ext4 /dev/nvme0n1p3
@@ -192,10 +194,6 @@ echo "
 "
 cat /mnt/etc/fstab
 echo
-echo "Is this correct? \n
-if not correct please press Ctrl + c
-if correct press enter and then exec the ArchKrisshy-setup.sh like this : \n
-\n sh /root/ArchKrisshy-setup2.sh"
-echo
-read
-arch-chroot /mnt/root ./ArchKrisshy-setup2.sh
+echo "Enter = Yes , Ctrl+c = No \n"
+read -p "Is this correct ? "
+arch-chroot /mnt ./root/ArchKrisshy-setup2.sh
