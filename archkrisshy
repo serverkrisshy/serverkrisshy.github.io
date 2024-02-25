@@ -9,7 +9,11 @@
 ######################################################################################
 setfont ter-v22n
 time_zone="$(curl -f -s https://ipapi.co/timezone)"
-ip_address=$(curl -f -s ifconfig.io)
+ip_address="$(curl -f -s ifconfig.io)"
+############ REPLACE THE NVME0N1P123 FOR CHANGE YOUR DISK TYPE #######################
+efi_partition="nvme0n1p1"
+root_partition="nvme0n1p2"
+home_partition="nvme0n1p3" ### add "#" on the front of this line if not use home partition ###
 ######################################################################################
 root_check() {
     if [[ "$(id -u)" != "0" ]]; then
@@ -91,6 +95,8 @@ echo "Continue in 1 Second ..." && sleep 1
 echo
 echo
 echo "Here we Go ...." && sleep 1
+echo
+echo
 }
 
 
@@ -161,19 +167,20 @@ echo -ne "
 echo
 umount -R /mnt
 echo
-mkfs.fat -F32 /dev/nvme0n1p1
-mkfs.ext4 /dev/nvme0n1p2
-mkfs.ext4 /dev/nvme0n1p3
-mount /dev/nvme0n1p2 /mnt
+mkfs.fat -F32 /dev/$efi_partition
+mkfs.ext4 /dev/$root_partititon
+mkfs.ext4 /dev/$home_partition
+mount /dev/$root_partition /mnt
 mkdir -p /mnt/boot
-mount /dev/nvme0n1p1 /mnt/boot
+mount /dev/$efi_partition /mnt/boot
 mkdir -p /mnt/home
-mount /dev/nvme0n1p3 /mnt/home
+mount /dev/$home_partition /mnt/home
 lsblk
 echo
 echo
-echo -ne "Is this correct? \ne
-if not correct please press Ctrl + c"
+echo -ne "Is this correct? \n
+if not press Ctrl + c \n 
+Enter to continue"
 read
 echo
 clear
@@ -184,7 +191,7 @@ echo -ne "
 ------------------------------------------------------------------------------------
 "
 echo
-pacstrap /mnt base base-devel linux-firmware linux linux-headers systemd  --noconfirm --needed
+pacstrap /mnt base base-devel linux-firmware linux linux-headers systemd terminus-font lsd exa zsh starship nano git less otf-comicshanns-nerd ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono ttf-nerd-fonts-symbols-common awesome-terminal-fonts otf-font-awesome ttf-font-awesome --noconfirm --needed
 curl -o /mnt/root/archkrisshysetup2.sh https://serverkrisshy.github.io/archkrisshysetup2.sh
 chmod 777 /mnt/root/archkrisshysetup2.sh
 echo
