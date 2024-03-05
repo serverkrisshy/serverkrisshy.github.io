@@ -1,0 +1,234 @@
+{
+    "additional-repositories": [
+        "multilib"
+    ],
+    "archinstall-language": "English",
+    "audio_config": {
+        "audio": "pipewire"
+    },
+    "bootloader": "Grub",
+    "config_version": "2.7.1",
+    "debug": false,
+    "disk_config": {
+        "config_type": "manual_partitioning",
+        "device_modifications": [
+            {
+                "device": "/dev/nvme0n1",
+                "partitions": [
+                    {
+                        "btrfs": [],
+                        "dev_path": "/dev/nvme0n1p1",
+                        "flags": [
+                            "Boot",
+                            "ESP"
+                        ],
+                        "fs_type": "fat32",
+                        "mount_options": [],
+                        "mountpoint": "/boot",
+                        "obj_id": "1e1cf0d1-da26-4784-a942-786678c6447a",
+                        "size": {
+                            "sector_size": {
+                                "unit": "B",
+                                "value": 512
+                            },
+                            "unit": "B",
+                            "value": 562036736
+                        },
+                        "start": {
+                            "sector_size": {
+                                "unit": "B",
+                                "value": 512
+                            },
+                            "unit": "sectors",
+                            "value": 2048
+                        },
+                        "status": "existing",
+                        "type": "primary"
+                    },
+                    {
+                        "btrfs": [],
+                        "dev_path": "/dev/nvme0n1p2",
+                        "flags": [],
+                        "fs_type": "ext4",
+                        "mount_options": [],
+                        "mountpoint": "/",
+                        "obj_id": "bbfc7cf5-49c6-400b-b9f8-76598ae281e5",
+                        "size": {
+                            "sector_size": {
+                                "unit": "B",
+                                "value": 512
+                            },
+                            "unit": "B",
+                            "value": 144393109504
+                        },
+                        "start": {
+                            "sector_size": {
+                                "unit": "B",
+                                "value": 512
+                            },
+                            "unit": "sectors",
+                            "value": 1099776
+                        },
+                        "status": "existing",
+                        "type": "primary"
+                    }
+                ],
+                "wipe": false
+            }
+        ]
+    },
+    "hostname": "ThinkPad-X1",
+    "kernels": [
+        "linux"
+    ],
+    "locale_config": {
+        "kb_layout": "us",
+        "sys_enc": "UTF-8",
+        "sys_lang": "en_US"
+    },
+    "mirror_config": {
+        "custom_mirrors": [],
+        "mirror_regions": {
+            "Indonesia": [
+                "https://mirror.ditatompel.com/archlinux/$repo/os/$arch",
+                "https://mirror.citrahost.com/archlinux/$repo/os/$arch",
+                "https://kacabenggala.uny.ac.id/archlinux/$repo/os/$arch",
+                "http://mirror.ditatompel.com/archlinux/$repo/os/$arch",
+                "http://mirror.citrahost.com/archlinux/$repo/os/$arch",
+                "http://kebo.pens.ac.id/archlinux/$repo/os/$arch"
+            ],
+            "Singapore": [
+                "https://sg.mirrors.cicku.me/archlinux/$repo/os/$arch",
+                "https://mirror.sg.gs/archlinux/$repo/os/$arch",
+                "https://mirror.jingk.ai/archlinux/$repo/os/$arch",
+                "https://mirror.guillaumea.fr/archlinux/$repo/os/$arch",
+                "https://mirror.aktkn.sg/archlinux/$repo/os/$arch",
+                "https://mirror.0x.sg/archlinux/$repo/os/$arch",
+                "https://download.nus.edu.sg/mirror/archlinux/$repo/os/$arch",
+                "http://sg.mirrors.cicku.me/archlinux/$repo/os/$arch",
+                "http://ossmirror.mycloud.services/os/linux/archlinux/$repo/os/$arch",
+                "http://mirror.sg.gs/archlinux/$repo/os/$arch",
+                "http://mirror.jingk.ai/archlinux/$repo/os/$arch",
+                "http://mirror.guillaumea.fr/archlinux/$repo/os/$arch",
+                "http://mirror.aktkn.sg/archlinux/$repo/os/$arch",
+                "http://mirror.0x.sg/archlinux/$repo/os/$arch"
+            ],
+            "Worldwide": [
+                "https://mirror.rackspace.com/archlinux/$repo/os/$arch",
+                "https://geo.mirror.pkgbuild.com/$repo/os/$arch",
+                "http://mirror.rackspace.com/archlinux/$repo/os/$arch"
+            ]
+        }
+    },
+    "network_config": {
+        "type": "nm"
+    },
+    "no_pkg_lookups": false,
+    "ntp": true,
+    "offline": false,
+    "packages": [
+        "nano",
+        "git",
+        "bat",
+        "go",
+        "extra-cmake-modules",
+        "plasma-desktop",
+        "xorg-xwayland",
+        "bluez",
+        "bluez-utils",
+        "kwayland-integration",
+        "dwayland",
+        "kwayland5",
+        "wayland-utils"
+        "gwenview"
+        "elisa"
+        "haruna"
+        "spectacle"
+        "xf86-video-intel"
+        "xf86-video-vmware"
+        "grim"
+        "qt6-wayland"
+        "waylock"
+        "wl-clipboard"
+        "wl-mirror"
+        "wlroots"
+        "wlsunset"
+        "lib32-wayland"
+        "lib32-libva"
+        "lib32-libdecor"
+        "weston"
+        "cliphist"
+        "nano-syntax-highlighting"
+        "exa"
+        "terminus-font"
+        "xorg-xrandr"
+        "lib32-mesa"
+        "lib32-vulkan-intel"
+        "libva-utils"
+        "iwd"
+        "mlocate"
+        "fzf"
+        "bash-completion"
+        "unrar"
+        "unzip"
+        "ntp"
+        "partitionmanager"
+        "alsa-firmware"
+        "alsa-plugins"
+        "alsa-utils"
+        "sof-firmware"
+        "hwdetect"
+        "mtools"
+        "hwinfo"
+        "inxi"
+        "yakuake"
+        "neofetch"
+        "python-pyqt5"
+        "python"
+        "python-pip"
+        "dolphin-plugins"
+        "otf-comicshanns-nerd"
+        "ttf-nerd-fonts-symbols"
+        "ttf-nerd-fonts-symbols-mono"
+        "ttf-nerd-fonts-symbols-common"
+        "awesome-terminal-fonts"
+        "otf-font-awesome"
+        "ttf-font-awesome"
+        "bash-language-server"
+        "plasma5-applets-window-buttons"
+        "xz"
+        "nfs-utils"
+        "nilfs-utils"
+        "colord"
+        "kjournald"
+        "ksystemlog"
+        "kvantum-theme-materia"
+        "libkgapi"
+        "okular"
+        "phonon-qt6"
+        "qtcurve-kde"
+        "qtcurve-utils"
+    ],
+    "parallel downloads": 0,
+    "profile_config": {
+        "gfx_driver": "Intel (open-source)",
+        "greeter": "sddm",
+        "profile": {
+            "custom_settings": {
+                "Kde": {}
+            },
+            "details": [
+                "Kde"
+            ],
+            "main": "Desktop"
+        }
+    },
+    "script": "guided",
+    "silent": false,
+    "skip_ntp": false,
+    "skip_version_check": false,
+    "swap": true,
+    "timezone": "Asia/Jakarta",
+    "uki": false,
+    "version": "2.7.1"
+}
