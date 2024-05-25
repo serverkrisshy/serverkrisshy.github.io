@@ -83,6 +83,12 @@ body {
   font-size: 1.6rem;
 }
 
+.hero .nama-penerima-undangan,
+.hero .lokasi-penerima-undangan {
+  font-family: 'Ephesis', cursive;
+  font-size: 3.2rem;
+}
+
 .hero p {
   font-family: "Solway", sans-serif;
   font-size: 1.4rem;
@@ -92,7 +98,7 @@ body {
 .hero .untukhadir {
   font-family: "Work Sans", sans-serif;
   font-size: 1.4rem;
-  margin-top: 10rem;
+  margin-top: 1.8rem;
 }
 
 .hero .tanggal-waktu {
@@ -108,11 +114,10 @@ body {
   font-weight: 600;
   /* font-size: 2rem; */
   text-shadow: var(--shadow-btn);
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
 }
 
 .hero a:hover {
-  /* background-color: var(--primary); */
   color: var(--primary);
 }
 
@@ -142,15 +147,6 @@ body {
   font-family: "Courgette", cursive;
   font-size: 1.1rem;
   font-weight: 500;
-}
-
-@keyframes rotating {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 /* Media Query */
