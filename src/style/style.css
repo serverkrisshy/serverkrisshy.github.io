@@ -112,8 +112,8 @@ body {
 }
 
 .hero a:hover {
-  background-color: var(--primary);
-  color: var(--secondary);
+  /* background-color: var(--primary); */
+  color: var(--primary);
 }
 
 .footer {
