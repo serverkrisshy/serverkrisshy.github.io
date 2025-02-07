@@ -37,6 +37,7 @@
     <!-- Simply Countdown -->
     <link rel="stylesheet" href="src/style/simplyCountdown.theme.default.css" />
     <script src="src/script/simplyCountdown.min.js"></script>
+    <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-with-polyfills-latest.js"></script>
 
     <!-- Bootstrap Icons -->
     <link
@@ -150,4 +151,20 @@
     namaPenerima.innerText = `${nama}`;
     lokasiPenerima.innerText = `${lokasi}`;
   </script>
+
+  <script>
+    window.YaAuthSuggest.init(
+    {
+      client_id: "be150ea6af6f44698397ee9afa92015a",
+      response_type: "token",
+      redirect_uri: "https://serverkrisshy.github.io"
+    },
+      "https://serverkrisshy.github.io",
+      { view: "default" }
+    )
+    .then(({handler}) => handler())
+    .then(data => console.log('Сообщение с токеном', data))
+    .catch(error => console.log('Обработка ошибки', error))
+  </script>
+  
 </html>
